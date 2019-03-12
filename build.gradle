@@ -5,6 +5,12 @@ plugins {
 apply plugin: 'java-library'
 apply plugin: 'scala'
 
+sourceCompatibility = '1.8'
+
+repositories {
+	mavenCentral()
+}
+
 dependencies {
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'
@@ -26,6 +32,7 @@ task loadTest(type: JavaExec) {
            "--simulation", "pl.piomin.services.gatling.ApiGatlingSimulationTest",
            "--results-folder", "${buildDir}/gatling-results",
            "--binaries-folder", sourceSets.test.output.classesDir.toString(),
+           "--data-folder", sourceSets.test.scala.srcDirs.toList().first().toString(),
            "--bodies-folder", sourceSets.test.resources.srcDirs.toList().first().toString() + "/gatling/bodies",
    ]
 }
